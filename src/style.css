@@ -1,0 +1,420 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css');
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Comfortaa:wght@700&display=swap');
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+  box-sizing: border-box;
+  /* Default Font */
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+:root {
+  --dark: black;
+  --padding-body: 30px 50px;
+  --padding-container: 20px;
+  --border-radius: 20px;
+  --margin-bottom-head: 20px;
+  --padding-button: 10px 0 10px 13px;
+  --border-radius-button: 8px;
+  --background-color-button: linear-gradient(
+    to right,
+    #02bc7d,
+    rgb(51, 139, 147)
+  );
+  --padding-button-page: 7px 10px;
+  --padding-task-item: 10px 20px;
+  --margin-bottom-task-item: 10px;
+  --color-add-button: #02bc7d;
+}
+
+:root.light {
+  --font-color: black;
+  --background-color-body: white;
+}
+
+:root.dark {
+  --font-color: white;
+  --background-color-body: #111827;
+  --background-color-container: #1e293b;
+  --background-color-hover: #334155;
+  --background-color-task-item: #334155;
+}
+
+body {
+  color: var(--font-color);
+  background-color: var(--background-color-body);
+  padding: var(--padding-body);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'header header'
+    'aside main';
+  gap: 30px;
+}
+
+h1,
+h2 {
+  font-family: 'Comfortaa', cursive;
+  margin-bottom: var(--margin-bottom-head);
+}
+
+.aside-container,
+.main-container {
+  padding: var(--padding-container);
+  border-radius: var(--border-radius);
+  background-color: var(--background-color-container);
+}
+
+.add-btn {
+  border: none;
+  background-color: transparent;
+  font-size: inherit;
+  font-weight: bold;
+  color: inherit;
+  outline: inherit;
+  padding: var(--padding-button);
+}
+
+.add-btn:hover {
+  color: var(--color-add-button);
+  transform: scale(1.08);
+}
+
+i {
+  font-size: 1.08rem;
+}
+
+.header-container {
+  grid-area: header;
+}
+
+.first-o {
+  color: rgb(220, 80, 52);
+}
+
+.second-o {
+  color: var(--color-add-button);
+}
+
+.header-container,
+.logo-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.logo-container {
+  gap: 5px;
+}
+
+.logo-symbol {
+  position: relative;
+  top: 7px;
+  width: 50px;
+}
+
+.logo-name {
+  font-size: 2.8rem;
+}
+
+.toggle-switch {
+  position: relative;
+  top: -25px;
+  width: 60px;
+}
+
+.mode-label {
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  background-color: var(--background-color-container);
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+#mode {
+  position: absolute;
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  transition: all 0.3s;
+}
+
+#mode:checked ~ .slider {
+  background-color: var(--color-add-button);
+}
+
+.slider::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  box-shadow: inset 12px -1px 0px 0px var(--color-add-button);
+  background-color: var(--background-color-container);
+  transition: all 0.3s;
+}
+
+#mode:checked ~ .slider::before {
+  transform: translateX(100%);
+  box-shadow: none;
+}
+
+.aside-container {
+  grid-area: aside;
+  min-height: 480px;
+  width: max(180px, 25vw);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 40px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: var(--color-add-button);
+}
+
+.filter-btn,
+.project-folder-btn {
+  width: 100%;
+  padding: var(--padding-button);
+  text-align: left;
+  display: flex;
+  gap: 20px;
+  border: none;
+  background-color: transparent;
+  font-size: inherit;
+  color: inherit;
+  border-radius: var(--border-radius-button);
+}
+
+.filter-lists,
+.project-folder-lists {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.aside-container > footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+footer > a > i {
+  font-size: 2rem;
+  color: var(--font-color);
+}
+
+footer > a > i:hover {
+  color: var(--color-add-button);
+}
+
+footer > p {
+  font-size: 0.8rem;
+}
+
+.main-container {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+}
+
+.task__item {
+  padding: var(--padding-task-item);
+  border-radius: var(--border-radius-button);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: var(--margin-bottom-task-item);
+}
+
+.task__item > span {
+  margin-left: auto;
+}
+
+.task__item > p {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 1.1rem;
+}
+
+input[type='checkbox'] {
+}
+
+.pagination {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.page-btn {
+  border: none;
+  border-radius: var(--border-radius-button);
+  padding: var(--padding-button-page);
+  background: var(--background-color-button);
+  color: var(--font-color);
+  font-family: 'Comfortaa', cursive;
+}
+
+.page-btn:hover {
+  transform: scale(1.08);
+}
+
+.add-btn:active,
+.page-btn:active {
+  transform: scale(1);
+}
+
+.filter-btn:hover,
+.project-folder-btn:hover,
+.task__item:hover {
+  background-color: var(--background-color-hover);
+  color: var(--color-add-button);
+}
+
+.filter-btn,
+.task__item,
+.project-folder-btn,
+.add-btn,
+footer > a > i,
+.page-btn {
+  transition: all 0.3s ease-in-out;
+}
