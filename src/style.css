@@ -136,7 +136,6 @@ table {
 }
 
 :root {
-  --dark: black;
   --padding-body: 30px 50px;
   --padding-container: 20px;
   --border-radius: 20px;
@@ -152,11 +151,17 @@ table {
   --padding-task-item: 10px 20px;
   --margin-bottom-task-item: 10px;
   --color-add-button: #02bc7d;
+  --star-dark: rgb(154, 150, 150);
+  --star-light: rgb(249, 202, 60);
+  --bin-delete: rgb(220, 80, 52);
 }
 
 :root.light {
   --font-color: black;
-  --background-color-body: white;
+  --background-color-body: #f2f0f0;
+  --background-color-container: white;
+  --background-color-hover: #f4f4f5;
+  --background-color-task-item: #334155;
 }
 
 :root.dark {
@@ -180,36 +185,13 @@ body {
   gap: 30px;
 }
 
-h1,
-h2 {
-  font-family: 'Comfortaa', cursive;
-  margin-bottom: var(--margin-bottom-head);
-}
-
-.aside-container,
-.main-container {
-  padding: var(--padding-container);
-  border-radius: var(--border-radius);
-  background-color: var(--background-color-container);
-}
-
-.add-btn {
-  border: none;
-  background-color: transparent;
-  font-size: inherit;
-  font-weight: bold;
-  color: inherit;
-  outline: inherit;
-  padding: var(--padding-button);
-}
-
-.add-btn:hover {
-  color: var(--color-add-button);
-  transform: scale(1.08);
-}
-
-i {
-  font-size: 1.08rem;
+input[type='checkbox']#check-task,
+input[type='text'],
+input[type='date'],
+textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .header-container {
@@ -217,7 +199,7 @@ i {
 }
 
 .first-o {
-  color: rgb(220, 80, 52);
+  color: var(--bin-delete);
 }
 
 .second-o {
@@ -298,7 +280,7 @@ i {
 .aside-container {
   grid-area: aside;
   min-height: 480px;
-  width: max(180px, 25vw);
+  width: max(180px, 20vw);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -331,6 +313,26 @@ h2 {
   gap: 5px;
 }
 
+.form-project {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  grid-template-areas:
+    'project project'
+    'submit cancel';
+  gap: 5px;
+}
+
+input[type='text'] {
+  grid-area: project;
+  border-radius: var(--border-radius-button);
+  padding: 5px;
+  background-color: transparent;
+  border: 1px solid grey;
+  font-family: inherit;
+  color: inherit;
+}
+
 .aside-container > footer {
   margin-top: auto;
   display: flex;
@@ -358,25 +360,168 @@ footer > p {
   flex-direction: column;
 }
 
+.task-box-1,
+.task-box-2 {
+  display: flex;
+  align-items: center;
+}
+
+.task-box-1 {
+  gap: 18px;
+}
+
+.task-box-2 {
+  gap: 13px;
+  margin-left: auto;
+}
+
 .task__item {
   padding: var(--padding-task-item);
   border-radius: var(--border-radius-button);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
+  flex-wrap: wrap;
   margin-bottom: var(--margin-bottom-task-item);
 }
 
-.task__item > span {
-  margin-left: auto;
-}
-
-.task__item > p {
+.task__item p {
   font-family: 'Architects Daughter', cursive;
   font-size: 1.1rem;
 }
 
-input[type='checkbox'] {
+input[type='checkbox']#check-task {
+  border: 2px solid var(--font-color);
+  background-color: transparent;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  /* transform: translateY(-0.075em); */
+
+  display: grid;
+  place-content: center;
+}
+
+input[type='checkbox']::before {
+  content: '';
+  width: 1em;
+  height: 1em;
+  transform: scale(0);
+  transition: all 0.3s ease-in-out;
+  box-shadow: inset 1em 1em var(--color-add-button);
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type='checkbox']:checked::before {
+  transform: scale(1);
+}
+
+input[type='date'] {
+  border: none;
+  padding: 2px 0;
+  width: 115px;
+  background-color: transparent;
+  color: var(--color-add-button);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  background-color: var(--color-add-button);
+  cursor: pointer;
+  border-radius: 20%;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator:hover {
+  transform: scale(1.2);
+}
+
+input[type='date']:focus {
+  outline: none;
+}
+
+.favourite-btn,
+.bin-btn {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  color: var(--star-dark);
+}
+
+.favourite-btn:hover {
+  color: var(--star-light);
+  transform: scale(1.2);
+}
+
+.favourite {
+  color: var(--star-light);
+}
+
+.bin-btn:hover {
+  color: var(--bin-delete);
+  transform: scale(1.2);
+}
+
+.form-task {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, auto);
+  grid-template-areas:
+    'task task task task'
+    'date . submit cancel';
+  gap: 8px;
+}
+
+textarea {
+  grid-area: task;
+  resize: none;
+  width: 98%;
+  height: 50px;
+  padding: 5px;
+  border-radius: var(--border-radius-button);
+  font-family: 'Architects Daughter';
+  font-size: inherit;
+  background-color: transparent;
+  color: var(--font-color);
+}
+
+textarea:focus,
+input[type='text']:focus {
+  outline: 1px solid var(--color-add-button);
+}
+
+textarea:focus::placeholder,
+input[type='text']:focus::placeholder {
+  color: var(--color-add-button);
+}
+
+.form-date {
+  grid-area: date;
+}
+
+.submit-btn {
+  grid-area: submit;
+  background-color: var(--color-add-button);
+}
+
+.cancel-btn {
+  grid-area: cancel;
+  background-color: var(--bin-delete);
+}
+
+.submit-btn,
+.cancel-btn {
+  padding: 5px 10px;
+  border: none;
+  color: var(--font-color);
+  border-radius: var(--border-radius-button);
+  font-size: 0.8rem;
+}
+
+.submit-btn:hover,
+.cancel-btn:hover {
+  transform: scale(1.05);
 }
 
 .pagination {
@@ -398,8 +543,45 @@ input[type='checkbox'] {
   transform: scale(1.08);
 }
 
+h1,
+h2 {
+  font-family: 'Comfortaa', cursive;
+  margin-bottom: var(--margin-bottom-head);
+}
+
+.aside-container,
+.main-container {
+  padding: var(--padding-container);
+  border-radius: var(--border-radius);
+  background-color: var(--background-color-container);
+}
+
+.add-btn {
+  border: none;
+  background-color: transparent;
+  font-size: inherit;
+  font-weight: bold;
+  color: inherit;
+  outline: inherit;
+  padding: var(--padding-button);
+}
+
+.add-btn:hover {
+  color: var(--color-add-button);
+  transform: scale(1.08);
+}
+
+i {
+  font-size: 1.08rem;
+}
+
 .add-btn:active,
-.page-btn:active {
+.page-btn:active,
+.favourite-btn:active,
+.bin-btn:active,
+input[type='date']::-webkit-calendar-picker-indicator:active,
+.submit-btn:active,
+.cancel-btn:active {
   transform: scale(1);
 }
 
@@ -415,6 +597,15 @@ input[type='checkbox'] {
 .project-folder-btn,
 .add-btn,
 footer > a > i,
-.page-btn {
+.page-btn,
+.favourite-btn,
+.bin-btn,
+input[type='date']::-webkit-calendar-picker-indicator,
+.submit-btn,
+.cancel-btn {
   transition: all 0.3s ease-in-out;
+}
+
+.hide {
+  display: none;
 }

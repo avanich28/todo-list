@@ -70,6 +70,18 @@
           </ul>
         </nav>
         <button class="add-btn add-btn--project">+ Add a Project</button>
+        <form action="#" class="form-project hide">
+          <label for="project-name"></label>
+          <input
+            type="text"
+            name="project-name"
+            id="project-name"
+            placeholder="Enter file name..."
+            maxlength="23"
+          />
+          <button class="submit-btn">Submit</button>
+          <button class="cancel-btn">Cancel</button>
+        </form>
       </div>
 
       <footer>
@@ -84,31 +96,38 @@
       <div class="tasks">
         <ul class="task-lists">
           <li class="task__item">
-            <input type="checkbox" name="task" id="check-task" />
-            <label for="check-task"></label>
-            <p>Need to study React and Node.js</p>
-            <label for="date"></label>
-            <input type="date" name="date" id="date" />
-            <button><i class="bi bi-star-fill"></i></button>
-            <button><i class="bi bi-trash3-fill"></i></button>
-          </li>
-          <li class="task__item">
-            <input type="checkbox" name="task" id="check-task" />
-            <label for="check-task"></label>
-            <p>Practice Codewar</p>
-            <span>Today</span>
-            <button><i class="bi bi-star-fill"></i></button>
+            <div class="task-box-1">
+              <label for="check-task" class="check-task-label"
+                ><input type="checkbox" name="task" id="check-task"
+              /></label>
+              <p>Need to study React and Node.js</p>
+            </div>
+            <div class="task-box-2">
+              <label for="date" class="date-label"
+                ><input type="date" name="date" id="date"
+              /></label>
+              <button class="favourite-btn favourite">
+                <i class="bi bi-star-fill"></i>
+              </button>
+              <button class="bin-btn"><i class="bi bi-trash3-fill"></i></button>
+            </div>
           </li>
         </ul>
         <button class="add-btn add-btn--task">+ Add a Task</button>
-        <form action="#" class="form hide">
-          <label for="todo"></label>
-          <input type="text" name="todo" id="todo" />
-          <label for="date"></label>
-          <input type="date" name="date" id="date" />
-          <button><i class="bi bi-star-fill"></i></button>
-          <button>Submit</button>
-          <button>Cancel</button>
+        <form action="#" class="form-task hide">
+          <label for="todo" class="form-textarea"></label>
+          <textarea
+            name="todo"
+            id="todo"
+            cols="30"
+            rows="10"
+            placeholder="Please enter todo list here..."
+          ></textarea>
+          <label for="date" class="form-date"
+            ><input type="date" name="date" id="date"
+          /></label>
+          <button class="submit-btn">Submit</button>
+          <button class="cancel-btn">Cancel</button>
         </form>
       </div>
 
