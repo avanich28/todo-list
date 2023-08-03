@@ -385,9 +385,11 @@ footer > p {
   margin-bottom: var(--margin-bottom-task-item);
 }
 
-.task__item p {
+.task__item p,
+.task__item textarea {
   font-family: 'Architects Daughter', cursive;
   font-size: 1.1rem;
+  border: none;
 }
 
 input[type='checkbox']#check-task {
@@ -396,7 +398,6 @@ input[type='checkbox']#check-task {
   border-radius: 50%;
   width: 25px;
   height: 25px;
-  /* transform: translateY(-0.075em); */
 
   display: grid;
   place-content: center;
@@ -419,7 +420,7 @@ input[type='checkbox']:checked::before {
 
 input[type='date'] {
   border: none;
-  padding: 2px 0;
+  padding: 2px;
   width: 115px;
   background-color: transparent;
   color: var(--color-add-button);
@@ -592,17 +593,10 @@ input[type='date']::-webkit-calendar-picker-indicator:active,
   color: var(--color-add-button);
 }
 
-.filter-btn,
 .task__item,
-.project-folder-btn,
-.add-btn,
 footer > a > i,
-.page-btn,
-.favourite-btn,
-.bin-btn,
 input[type='date']::-webkit-calendar-picker-indicator,
-.submit-btn,
-.cancel-btn {
+button {
   transition: all 0.3s ease-in-out;
 }
 
