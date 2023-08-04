@@ -154,12 +154,13 @@ table {
   --star-dark: rgb(154, 150, 150);
   --star-light: rgb(249, 202, 60);
   --bin-delete: rgb(220, 80, 52);
+  --pencil-edit: rgb(103, 220, 249);
 }
 
 :root.light {
-  --font-color: black;
-  --background-color-body: #f2f0f0;
-  --background-color-container: white;
+  --font-color: rgb(35, 34, 34);
+  --background-color-body: rgb(232, 228, 228);
+  --background-color-container: rgb(210, 209, 206);
   --background-color-hover: #f4f4f5;
   --background-color-task-item: #334155;
 }
@@ -292,6 +293,11 @@ h2 {
   color: var(--color-add-button);
 }
 
+.filter-btn.active {
+  font-weight: bold;
+  background-color: var(--background-color-hover);
+}
+
 .filter-btn,
 .project-folder-btn {
   width: 100%;
@@ -385,11 +391,13 @@ footer > p {
   margin-bottom: var(--margin-bottom-task-item);
 }
 
-.task__item p,
-.task__item textarea {
+.para {
   font-family: 'Architects Daughter', cursive;
   font-size: 1.1rem;
-  border: none;
+}
+
+.date {
+  font-size: 0.9rem;
 }
 
 input[type='checkbox']#check-task {
@@ -418,32 +426,9 @@ input[type='checkbox']:checked::before {
   transform: scale(1);
 }
 
-input[type='date'] {
-  border: none;
-  padding: 2px;
-  width: 115px;
-  background-color: transparent;
-  color: var(--color-add-button);
-  font-family: inherit;
-  font-size: 0.9rem;
-}
-
-input[type='date']::-webkit-calendar-picker-indicator {
-  background-color: var(--color-add-button);
-  cursor: pointer;
-  border-radius: 20%;
-}
-
-input[type='date']::-webkit-calendar-picker-indicator:hover {
-  transform: scale(1.2);
-}
-
-input[type='date']:focus {
-  outline: none;
-}
-
 .favourite-btn,
-.bin-btn {
+.bin-btn,
+.edit-btn {
   border: none;
   background-color: transparent;
   padding: 0;
@@ -461,6 +446,11 @@ input[type='date']:focus {
 
 .bin-btn:hover {
   color: var(--bin-delete);
+  transform: scale(1.2);
+}
+
+.edit-btn:hover {
+  color: var(--pencil-edit);
   transform: scale(1.2);
 }
 
@@ -499,6 +489,30 @@ input[type='text']:focus::placeholder {
 
 .form-date {
   grid-area: date;
+}
+
+input[type='date'] {
+  border: none;
+  padding: 2px;
+  width: 115px;
+  background-color: transparent;
+  color: var(--color-add-button);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  background-color: var(--color-add-button);
+  cursor: pointer;
+  border-radius: 20%;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator:hover {
+  transform: scale(1.2);
+}
+
+input[type='date']:focus {
+  outline: none;
 }
 
 .submit-btn {
@@ -582,7 +596,8 @@ i {
 .bin-btn:active,
 input[type='date']::-webkit-calendar-picker-indicator:active,
 .submit-btn:active,
-.cancel-btn:active {
+.cancel-btn:active,
+.edit-btn:active {
   transform: scale(1);
 }
 

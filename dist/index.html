@@ -4,12 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo List</title>
-    <link rel="stylesheet" href="style.css" />
-  <script defer src="bundlec127c008f96b3063e967.js"></script></head>
+    <link rel="stylesheet" src="style.css" />
+  <script defer src="bundle625417890a5205000c3c.js"></script></head>
   <body>
     <header class="header-container">
       <div class="logo-container">
-        <img src="./img/checkmark.png" alt="Check mark" class="logo-symbol" />
+        <img
+          src="checkmark.png"
+          alt="Check mark"
+          class="logo-symbol"
+        />
         <h1 class="logo-name">
           T<span class="first-o">o</span>d<span class="second-o">o</span>
         </h1>
@@ -25,7 +29,7 @@
     <aside class="aside-container">
       <div class="filter-sub-container">
         <h2>Filters</h2>
-        <nav>
+        <nav class="navs">
           <ul class="filter-lists">
             <li class="filter__item">
               <button class="filter-btn" data-filter="0">
@@ -97,31 +101,15 @@
               <label for="check-task" class="check-task-label"
                 ><input type="checkbox" name="task" id="check-task"
               /></label>
-              <!-- <label for="task-detail" class="task-detail-label">
-                <input
-                  type="text"
-                  name="task-detail"
-                  id="task-detail"
-                  value=""
-                />
-              </label> -->
               <p class="para">I want to learn react</p>
-              <label for="task-detail" class="task-detail-label hide">
-                <textarea
-                  name="task-detail"
-                  id="task-detail"
-                  cols="30"
-                  rows="1"
-                  value=""
-                ></textarea>
-              </label>
             </div>
             <div class="task-box-2">
-              <label for="date" class="date-label"
-                ><input type="date" name="date" id="date"
-              /></label>
+              <p class="date">2022/08/1</p>
               <button class="favourite-btn">
                 <i class="bi bi-star-fill"></i>
+              </button>
+              <button class="edit-btn">
+                <i class="bi bi-pencil-square"></i>
               </button>
               <button class="bin-btn"><i class="bi bi-trash3-fill"></i></button>
             </div>
@@ -138,7 +126,7 @@
             placeholder="Please enter todo list here..."
           ></textarea>
           <label for="date" class="form-date"
-            ><input type="date" name="date" id="date"
+            ><input type="date" name="date" id="date" required
           /></label>
           <button class="submit-btn">Submit</button>
           <button class="cancel-btn">Cancel</button>
