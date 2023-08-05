@@ -1,11 +1,44 @@
 import View from './View.js';
 import { filterDate, getNextDay } from '../helpers.js';
 
-class ResultView extends View {
+class ResultsView extends View {
   _parentElement = document.querySelector('.task-lists');
+
+  addHandlerFavourite(handler) {
+    this._parentElement.addEventListener('click', e => {
+      const star = e.target.closest('.bi-star-fill');
+      if (!star) return;
+
+      handler(this._getItemIndex(e.target));
+    });
+  }
+
+  addHandlerDelete(handler) {
+    this._parentElement.addEventListener('click', e => {
+      const bin = e.target.closest('.bi-trash3-fill');
+      if (!bin) return;
+
+      handler(this._getItemIndex(e.target));
+    });
+  }
+
+  addHandlerEdit(handler) {
+    this._parentElement.addEventListener('click', e => {
+      const pencil = e.target.closest('.bi-pencil-square');
+      if (!pencil) return;
+
+      handler(this._getItemIndex(e.target));
+    });
+  }
 
   clear() {
     this._parentElement.innerHTML = '';
+  }
+
+  _getItemIndex(target) {
+    const data = target.closest('.task__item');
+    const dataIndex = +data.dataset.index;
+    return dataIndex;
   }
 
   _convertDate(date) {
@@ -24,7 +57,7 @@ class ResultView extends View {
   _generateMarkup(render = true) {
     return `
     <li class="task__item" data-index="${
-      render ? this._parentElement.children.length : this._arrDummy.length
+      render ? this._parentElement.children.length : this._dummyArr.length
     }">
       <div class="task-box-1">
         <label for="check-task" class="check-task-label"
@@ -34,10 +67,10 @@ class ResultView extends View {
       </div>
       <div class="task-box-2">
         <p class="date">${this._convertDate(this._data.date)}</p>
-        <button class="favourite-btn ${
-          this._data.favourite ? 'favourite' : ''
-        }">
-          <i class="bi bi-star-fill"></i>
+        <button class="favourite-btn">
+          <i class="bi bi-star-fill ${
+            this._data.favourite ? 'favourite' : ''
+          }"></i>
         </button>
         <button class="edit-btn">
           <i class="bi bi-pencil-square"></i>
@@ -48,4 +81,4 @@ class ResultView extends View {
   }
 }
 
-export default new ResultView();
+export default new ResultsView();

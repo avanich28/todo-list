@@ -39,3 +39,19 @@ export const deleteFavourite = function (dataIndex) {
   data.favourite = false;
   state.favouriteTasks.splice(index, 1);
 };
+
+export const deleteTask = function (dataIndex) {
+  const data = state.allTasks[dataIndex];
+  state.allTasks.splice(dataIndex, 1);
+
+  for (let i = 0; i < 4; i++) {
+    const index = Object.values(state)[i].findIndex(obj => obj === data);
+    if (index === -1) continue;
+    else Object.values(state)[i].splice(index, 1);
+  }
+};
+
+export const editData = function (newData, curDataIndex) {
+  state.allTasks[curDataIndex].todo = newData.todo;
+  state.allTasks[curDataIndex].date = newData.date;
+};

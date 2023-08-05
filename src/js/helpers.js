@@ -1,6 +1,3 @@
-// FIXME automatically update date
-export const getNewDate = function (strDate) {};
-
 export const filterDate = function (strDate) {
   return strDate.toISOString().slice(0, 10);
 };

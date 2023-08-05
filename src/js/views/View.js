@@ -1,6 +1,6 @@
 export default class View {
   _data;
-  _arrDummy = [];
+  _dummyArr = [];
 
   render(data, render = true) {
     if (!data) return;
@@ -16,11 +16,11 @@ export default class View {
     const newMarkUp = this._data
       .map(data => {
         const html = this.render(data, false);
-        this._arrDummy.push(0);
+        this._dummyArr.push(0);
         return html;
       })
       .join('');
-    this._arrDummy = [];
+    this._dummyArr = [];
 
     // In memory
     const newDOM = document.createRange().createContextualFragment(newMarkUp);
@@ -28,18 +28,30 @@ export default class View {
     const newElements = Array.from(newDOM.querySelectorAll('*'));
     const curElements = Array.from(this._parentElement.querySelectorAll('*'));
 
+    // Compare
     newElements.forEach((newEl, i) => {
       const curEl = curElements[i];
 
+      // Update text
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild?.nodeValue.trim() !== ''
+      ) {
+        curEl.textContent = newEl.textContent;
+      }
+
+      // Update attribute
       if (!newEl.isEqualNode(curEl)) {
         Array.from(newEl.attributes).forEach(attr => {
-          // BUG
-          console.log(attr);
-          console.log(curEl);
-          console.log(newEl);
-          curEl.setAttribute(attr.class, attr.value);
+          curEl.setAttribute(attr.name, attr.value);
         });
       }
     });
+  }
+
+  _activeNav(el) {
+    this._allNav.forEach(el => el.classList.remove('active'));
+
+    el.classList.add('active');
   }
 }

@@ -1,4 +1,6 @@
-class FilterView {
+import View from './View.js';
+
+class FilterView extends View {
   _parentEl = document.querySelector('.filter-lists');
   _allNav = document.querySelectorAll('.filter-btn');
   _curFilter;
@@ -21,14 +23,8 @@ class FilterView {
       const dataTypeIndex = +btn.dataset.filter;
       handler(dataTypeIndex);
       // For adding favourite
-      self._curFilter = dataTypeIndex;
+      self._curFilter = dataTypeIndex; // FIXME
     });
-  }
-
-  _activeNav(el) {
-    this._allNav.forEach(el => el.classList.remove('active'));
-
-    el.classList.add('active');
   }
 }
 

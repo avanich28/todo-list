@@ -1,5 +1,5 @@
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css');
-@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Comfortaa:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Klee+One:wght@600&display=swap');
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -161,7 +161,7 @@ table {
   --font-color: rgb(35, 34, 34);
   --background-color-body: rgb(232, 228, 228);
   --background-color-container: rgb(210, 209, 206);
-  --background-color-hover: #f4f4f5;
+  --background-color-hover: #e3e3e4;
   --background-color-task-item: #334155;
 }
 
@@ -392,8 +392,8 @@ footer > p {
 }
 
 .para {
-  font-family: 'Architects Daughter', cursive;
-  font-size: 1.1rem;
+  font-family: 'Klee One', cursive;
+  font-size: inherit;
 }
 
 .date {
@@ -454,7 +454,8 @@ input[type='checkbox']:checked::before {
   transform: scale(1.2);
 }
 
-.form-task {
+.form-task,
+.form-edit-task {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, auto);
@@ -471,7 +472,7 @@ textarea {
   height: 50px;
   padding: 5px;
   border-radius: var(--border-radius-button);
-  font-family: 'Architects Daughter';
+  font-family: 'Klee One', cursive;
   font-size: inherit;
   background-color: transparent;
   color: var(--font-color);
