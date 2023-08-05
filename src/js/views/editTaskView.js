@@ -1,7 +1,14 @@
-class EditTaskView {
+import TaskView from './taskView.js';
+
+class EditTaskView extends TaskView {
   curDataIndex;
   _parentEl = document.querySelector('.edit-lists');
   _form = document.querySelector('.form-edit-task');
+
+  constructor() {
+    super();
+    this.clickCancelBtn();
+  }
 
   addHandlerUploadEdit(handler) {
     this._form.addEventListener('submit', e => {
@@ -11,7 +18,7 @@ class EditTaskView {
 
       handler(newData, this.curDataIndex);
       this._toggleModal();
-      this._clearInput();
+      this.clearInput();
     });
   }
 
@@ -22,20 +29,6 @@ class EditTaskView {
       .querySelectorAll('.edit-textarea, #date')
       .forEach((el, i) => (el.value = inputs[i]));
     this._toggleModal();
-  }
-
-  _clickCancelBtn() {
-    this._parentEl.querySelector('.cancel-btn').addEventListener('click', e => {
-      e.preventDefault();
-      this._toggleModal();
-      this._clearInput();
-    });
-  }
-
-  _clearInput() {
-    this._form
-      .querySelectorAll('.form-textarea, #date')
-      .forEach(el => (el.value = ''));
   }
 
   _toggleModal() {

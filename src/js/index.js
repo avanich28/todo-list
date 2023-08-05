@@ -5,22 +5,22 @@ import mode from './views/modeView.js';
 import addTaskView from './views/addTaskView.js';
 import editTaskView from './views/editTaskView.js';
 import filterView from './views/filterView.js';
-import resultsView from './views/resultsView.js';
+import resultTasksView from './views/resultTasksView.js';
 
 const controlAddTaskView = function (data) {
   model.storeTask(data);
-  model.filterCategories(data);
-  resultsView.render(data);
+  resultTasksView.render(data);
 };
 
 const controlFilterView = function (dataTypeIndex) {
   const dataSet = Object.values(model.state)[dataTypeIndex]; // FIXME
 
   // Clear display
-  resultsView.clear();
+  resultTasksView.clear();
 
   // Render display
-  if (dataSet.length !== 0) dataSet.forEach(data => resultsView.render(data));
+  if (dataSet.length !== 0)
+    dataSet.forEach(data => resultTasksView.render(data));
 
   // Allow user to add list only 'all' filter
   if (dataTypeIndex === 0) addTaskView.unHideAddTaskView();
@@ -33,16 +33,17 @@ const controlFavourite = function (dataIndex) {
 
   const dataSet = Object.values(model.state)[filterView.getCurFilter()]; // FIXME
 
-  resultsView.update(dataSet);
+  resultTasksView.update(dataSet);
 };
 
 const controlDelete = function (dataIndex) {
   model.deleteTask(dataIndex);
-  resultsView.clear();
+  resultTasksView.clear();
 
   const dataSet = Object.values(model.state)[filterView.getCurFilter()]; // FIXME
 
-  if (dataSet.length !== 0) dataSet.forEach(data => resultsView.render(data));
+  if (dataSet.length !== 0)
+    dataSet.forEach(data => resultTasksView.render(data));
 };
 
 const controlEdit = function (dataIndex) {
@@ -54,7 +55,7 @@ const controlEdit = function (dataIndex) {
 const controlEditTask = function (newData, curDataIndex) {
   model.editData(newData, curDataIndex);
   const dataSet = Object.values(model.state)[filterView.getCurFilter()]; // FIXME
-  resultsView.update(dataSet);
+  resultTasksView.update(dataSet);
   addTaskView.unHideAddTaskView();
 };
 
@@ -62,9 +63,9 @@ const init = function () {
   addTaskView.addHandlerUpload(controlAddTaskView);
   filterView.addHandlerClick(controlFilterView);
   editTaskView.addHandlerUploadEdit(controlEditTask);
-  resultsView.addHandlerFavourite(controlFavourite);
-  resultsView.addHandlerDelete(controlDelete);
-  resultsView.addHandlerEdit(controlEdit);
+  resultTasksView.addHandlerFavourite(controlFavourite);
+  resultTasksView.addHandlerDelete(controlDelete);
+  resultTasksView.addHandlerEdit(controlEdit);
 
   // Default
   filterView.getDefaultClick();

@@ -18,13 +18,14 @@ const getWeekDate = function () {
   return dateArr;
 };
 
-export const storeTask = function (task) {
-  state.allTasks.push(task);
+const filterCategories = function (data) {
+  if (data.date === filterDate(new Date())) state.todayTasks.push(data);
+  if (getWeekDate().includes(data.date)) state.weekTasks.push(data);
 };
 
-export const filterCategories = function (task) {
-  if (task.date === filterDate(new Date())) state.todayTasks.push(task);
-  if (getWeekDate().includes(task.date)) state.weekTasks.push(task);
+export const storeTask = function (data) {
+  state.allTasks.push(data);
+  filterCategories(data);
 };
 
 export const addFavourite = function (dataIndex) {
@@ -40,18 +41,28 @@ export const deleteFavourite = function (dataIndex) {
   state.favouriteTasks.splice(index, 1);
 };
 
-export const deleteTask = function (dataIndex) {
-  const data = state.allTasks[dataIndex];
-  state.allTasks.splice(dataIndex, 1);
-
-  for (let i = 0; i < 4; i++) {
+const findAndDeleteIndex = function (start, end, data) {
+  for (let i = start; i < end; i++) {
     const index = Object.values(state)[i].findIndex(obj => obj === data);
     if (index === -1) continue;
     else Object.values(state)[i].splice(index, 1);
   }
 };
 
+export const deleteTask = function (dataIndex) {
+  const data = state.allTasks[dataIndex];
+  state.allTasks.splice(dataIndex, 1);
+  findAndDeleteIndex(0, 4, data);
+};
+
+const resetCategories = function (curDataIndex) {
+  const data = state.allTasks[curDataIndex];
+  findAndDeleteIndex(1, 3, data);
+  filterCategories(state.allTasks[curDataIndex]);
+};
+
 export const editData = function (newData, curDataIndex) {
   state.allTasks[curDataIndex].todo = newData.todo;
   state.allTasks[curDataIndex].date = newData.date;
+  resetCategories(curDataIndex);
 };

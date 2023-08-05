@@ -1,7 +1,7 @@
 import View from './View.js';
 import { filterDate, getNextDay } from '../helpers.js';
 
-class ResultsView extends View {
+class ResultTasksView extends View {
   _parentElement = document.querySelector('.task-lists');
 
   addHandlerFavourite(handler) {
@@ -81,4 +81,4 @@ class ResultsView extends View {
   }
 }
 
-export default new ResultsView();
+export default new ResultTasksView();
