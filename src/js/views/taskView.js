@@ -8,8 +8,9 @@ export default class TaskView {
   }
 
   clearInput() {
+    // FIXME
     this._form
-      .querySelectorAll('.form-textarea, #date')
+      .querySelectorAll('.form-textarea, #date, #project-name')
       .forEach(el => (el.value = ''));
   }
 }

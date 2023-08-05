@@ -24,6 +24,7 @@ const filterCategories = function (data) {
 };
 
 export const storeTask = function (data) {
+  data.favourite = false;
   state.allTasks.push(data);
   filterCategories(data);
 };
@@ -65,4 +66,10 @@ export const editData = function (newData, curDataIndex) {
   state.allTasks[curDataIndex].todo = newData.todo;
   state.allTasks[curDataIndex].date = newData.date;
   resetCategories(curDataIndex);
+};
+
+export const storeFolder = function (folder) {
+  folder.tasks = [];
+  state.folders.push(folder);
+  console.log(state.folders);
 };

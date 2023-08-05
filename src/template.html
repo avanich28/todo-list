@@ -60,29 +60,32 @@
       </div>
       <div class="project-sub-container">
         <h2>Projects</h2>
-        <nav>
+        <nav class="project-folders">
           <ul class="project-folder-lists">
-            <li class="folder__item">
-              <button class="project-folder-btn" data-file="0">
+            <!-- <li class="folder__item">
+              <button class="project-folder-btn active" data-folder="0">
                 <i class="bi bi-folder"></i>
                 <span>Default</span>
+                <i class="bi bi-x"></i>
               </button>
-            </li>
+            </li> -->
           </ul>
         </nav>
-        <button class="add-btn add-btn--project">+ Add a Project</button>
-        <form action="#" class="form-project hide">
-          <label for="project-name"></label>
-          <input
-            type="text"
-            name="project-name"
-            id="project-name"
-            placeholder="Enter file name..."
-            maxlength="23"
-          />
-          <button class="submit-btn">Submit</button>
-          <button class="cancel-btn">Cancel</button>
-        </form>
+        <div class="add-projects">
+          <button class="add-btn add-btn--project">+ Add a Project</button>
+          <form action="#" class="form-project hide">
+            <label for="project-name"></label>
+            <input
+              type="text"
+              name="name"
+              id="project-name"
+              placeholder="Enter file name..."
+              maxlength="23"
+            />
+            <button class="submit-btn">Submit</button>
+            <button class="cancel-btn">Cancel</button>
+          </form>
+        </div>
       </div>
 
       <footer>

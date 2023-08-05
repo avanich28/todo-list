@@ -49,8 +49,12 @@ export default class View {
     });
   }
 
-  _activeNav(el) {
-    this._allNav.forEach(el => el.classList.remove('active'));
+  activeNav(el) {
+    // Latest update
+    const allNav = document.querySelectorAll(
+      '.filter-btn, .project-folder-btn'
+    );
+    allNav.forEach(el => el.classList.remove('active'));
 
     el.classList.add('active');
   }

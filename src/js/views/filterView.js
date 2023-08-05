@@ -18,7 +18,7 @@ class FilterView extends View {
     this._parentEl.addEventListener('click', function (e) {
       const btn = e.target.closest('.filter-btn');
       if (!btn) return;
-      self._activeNav(btn);
+      self.activeNav(btn);
 
       const dataTypeIndex = +btn.dataset.filter;
       handler(dataTypeIndex);

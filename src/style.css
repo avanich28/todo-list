@@ -293,7 +293,8 @@ h2 {
   color: var(--color-add-button);
 }
 
-.filter-btn.active {
+.filter-btn.active,
+.project-folder-btn.active {
   font-weight: bold;
   background-color: var(--background-color-hover);
 }
@@ -310,6 +311,16 @@ h2 {
   font-size: inherit;
   color: inherit;
   border-radius: var(--border-radius-button);
+}
+
+.bi-x {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.bi-x:hover {
+  transform: scale(1.5);
+  color: var(--bin-delete);
 }
 
 .filter-lists,
@@ -598,7 +609,8 @@ i {
 input[type='date']::-webkit-calendar-picker-indicator:active,
 .submit-btn:active,
 .cancel-btn:active,
-.edit-btn:active {
+.edit-btn:active,
+.bi-x:active {
   transform: scale(1);
 }
 
@@ -612,7 +624,8 @@ input[type='date']::-webkit-calendar-picker-indicator:active,
 .task__item,
 footer > a > i,
 input[type='date']::-webkit-calendar-picker-indicator,
-button {
+button,
+.bi-x {
   transition: all 0.3s ease-in-out;
 }
 

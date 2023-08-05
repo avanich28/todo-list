@@ -16,7 +16,6 @@ class AddTaskView extends TaskView {
       e.preventDefault();
       const dataArr = [...new FormData(this._form)];
       const data = Object.fromEntries(dataArr);
-      data.favourite = false;
 
       handler(data);
       this._toggleModal();
@@ -33,10 +32,7 @@ class AddTaskView extends TaskView {
   }
 
   _clickAddTaskBtn() {
-    this._addTaskBtn.addEventListener('click', e => {
-      e.preventDefault();
-      this._toggleModal();
-    });
+    this._addTaskBtn.addEventListener('click', () => this._toggleModal());
   }
 
   _toggleModal() {
