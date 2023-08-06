@@ -37,6 +37,7 @@ class ResultTasksView extends View {
 
   _getItemIndex(target) {
     const data = target.closest('.task__item');
+    console.log(data);
     const dataIndex = +data.dataset.index;
     return dataIndex;
   }

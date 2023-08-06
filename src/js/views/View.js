@@ -3,6 +3,7 @@ export default class View {
   _dummyArr = [];
 
   render(data, render = true) {
+    console.log(data);
     if (!data) return;
     this._data = data;
     const markup = this._generateMarkup(render);

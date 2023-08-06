@@ -23,23 +23,34 @@ const filterCategories = function (data) {
   if (getWeekDate().includes(data.date)) state.weekTasks.push(data);
 };
 
-export const storeTask = function (data) {
+export const storeTask = function (data, folderIndex = false) {
   data.favourite = false;
   state.allTasks.push(data);
   filterCategories(data);
+
+  if (folderIndex >= 0) state.folders[folderIndex]?.tasks.push(data);
 };
 
-export const addFavourite = function (dataIndex) {
-  const data = state.allTasks[dataIndex];
+const findData = function (dataIndex, type, typeIndex) {
+  const data =
+    type === 'filter'
+      ? Object.values(state)[typeIndex][dataIndex]
+      : state.folders[typeIndex].tasks[dataIndex];
+  return data;
+};
+
+export const addFavourite = function (dataIndex, type, typeIndex) {
+  const data = findData(dataIndex, type, typeIndex);
   data.favourite = true;
   state.favouriteTasks.push(data);
 };
 
-export const deleteFavourite = function (dataIndex) {
-  const data = state.allTasks[dataIndex];
+export const deleteFavourite = function (dataIndex, type, typeIndex) {
+  const data = findData(dataIndex, type, typeIndex);
   const index = state.favouriteTasks.findIndex(obj => obj === data);
   data.favourite = false;
   state.favouriteTasks.splice(index, 1);
+  console.log(state.favouriteTasks);
 };
 
 const findAndDeleteIndex = function (start, end, data) {
@@ -52,7 +63,7 @@ const findAndDeleteIndex = function (start, end, data) {
 
 export const deleteTask = function (dataIndex) {
   const data = state.allTasks[dataIndex];
-  state.allTasks.splice(dataIndex, 1);
+  data.splice(dataIndex, 1);
   findAndDeleteIndex(0, 4, data);
 };
 

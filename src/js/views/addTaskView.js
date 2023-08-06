@@ -7,7 +7,7 @@ class AddTaskView extends TaskView {
 
   constructor() {
     super();
-    this._clickAddTaskBtn();
+    // this._clickAddTaskBtn();
     this.clickCancelBtn();
   }
 
@@ -23,6 +23,11 @@ class AddTaskView extends TaskView {
     });
   }
 
+  hideModal() {
+    this._addTaskBtn.classList.remove('hide');
+    this._form.classList.add('hide');
+  }
+
   hideAddTaskView() {
     this._parentEl.classList.add('hide');
   }
@@ -31,8 +36,11 @@ class AddTaskView extends TaskView {
     this._parentEl.classList.remove('hide');
   }
 
-  _clickAddTaskBtn() {
-    this._addTaskBtn.addEventListener('click', () => this._toggleModal());
+  clickAddTaskBtn(func) {
+    this._addTaskBtn.addEventListener('click', () => {
+      this._toggleModal();
+      func();
+    });
   }
 
   _toggleModal() {

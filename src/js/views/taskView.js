@@ -1,4 +1,6 @@
 export default class TaskView {
+  getFormData(form) {}
+
   clickCancelBtn() {
     this._parentEl.querySelector('.cancel-btn').addEventListener('click', e => {
       e.preventDefault();
