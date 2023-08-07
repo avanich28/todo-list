@@ -16,7 +16,6 @@ class AddTaskView extends TaskView {
       e.preventDefault();
       const dataArr = [...new FormData(this._form)];
       const data = Object.fromEntries(dataArr);
-
       handler(data);
       this._toggleModal();
       this.clearInput();

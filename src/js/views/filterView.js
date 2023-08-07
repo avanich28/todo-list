@@ -1,9 +1,9 @@
 import View from './View.js';
 
 class FilterView extends View {
-  filterNum = 0; // Default
   _parentEl = document.querySelector('.filter-lists');
   _allNav = document.querySelectorAll('.filter-btn');
+  _filterNum = 0; // Default
 
   getDefaultClick() {
     this._allNav[0].click();
@@ -18,18 +18,18 @@ class FilterView extends View {
 
       const dataTypeIndex = +btn.dataset.filter;
       // For adding favourite
-      self.filterNum = dataTypeIndex; // FIXME
+      self._filterNum = dataTypeIndex; // FIXME
 
       handler(dataTypeIndex);
     });
   }
 
   getCurFilter() {
-    return this.filterNum;
+    return this._filterNum;
   }
 
   resetCurFilter() {
-    this.filterNum = undefined;
+    this._filterNum = undefined;
   }
 }
 

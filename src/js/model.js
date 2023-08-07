@@ -32,12 +32,30 @@ export const storeTask = function (data, folderIndex = false) {
 };
 
 const findData = function (dataIndex, type, typeIndex) {
+  console.log(state.folders, typeIndex, type);
   const data =
     type === 'filter'
       ? Object.values(state)[typeIndex][dataIndex]
       : state.folders[typeIndex].tasks[dataIndex];
   return data;
 };
+
+// Delete in each filter and folder
+const findAndDeleteIndex = function (start, end, data) {
+  for (let i = start; i < end; i++) {
+    const index = Object.values(state)[i].findIndex(obj => obj === data);
+    if (index === -1) continue;
+    else Object.values(state)[i].splice(index, 1);
+  }
+
+  for (let i = 0; i < state.folders.length; i++) {
+    const index = state.folders[i].tasks.findIndex(obj => obj === data);
+    if (index === -1) continue;
+    else state.folders[i].tasks.splice(index, 1);
+  }
+};
+
+// Delete folder
 
 export const addFavourite = function (dataIndex, type, typeIndex) {
   const data = findData(dataIndex, type, typeIndex);
@@ -53,17 +71,8 @@ export const deleteFavourite = function (dataIndex, type, typeIndex) {
   console.log(state.favouriteTasks);
 };
 
-const findAndDeleteIndex = function (start, end, data) {
-  for (let i = start; i < end; i++) {
-    const index = Object.values(state)[i].findIndex(obj => obj === data);
-    if (index === -1) continue;
-    else Object.values(state)[i].splice(index, 1);
-  }
-};
-
-export const deleteTask = function (dataIndex) {
-  const data = state.allTasks[dataIndex];
-  data.splice(dataIndex, 1);
+export const deleteTask = function (dataIndex, type, typeIndex) {
+  const data = findData(dataIndex, type, typeIndex);
   findAndDeleteIndex(0, 4, data);
 };
 
@@ -84,3 +93,5 @@ export const storeFolder = function (folder) {
   state.folders.push(folder);
   console.log(state.folders);
 };
+
+export const deleteFolder = function (folder) {};

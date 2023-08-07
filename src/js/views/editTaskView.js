@@ -31,6 +31,11 @@ class EditTaskView extends TaskView {
     this._toggleModal();
   }
 
+  hideModal() {
+    this.clearInput();
+    this._parentEl.classList.add('hide');
+  }
+
   _toggleModal() {
     this._parentEl.classList.toggle('hide');
   }

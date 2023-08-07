@@ -22,9 +22,11 @@ const controlAddTaskView = function (data) {
 const controlFilterView = function (dataTypeIndex) {
   addTaskView.hideModal();
   addProjectTaskView.hideModal();
+  editTaskView.hideModal();
+
   resultProjectsView.resetCurProject();
 
-  const dataSet = Object.values(model.state)[dataTypeIndex]; // FIXME
+  const dataSet = Object.values(model.state)[dataTypeIndex];
 
   // Clear display
   resultTasksView.clear();
@@ -42,6 +44,7 @@ const controlFilterView = function (dataTypeIndex) {
 const controlFavourite = function (dataIndex) {
   addTaskView.hideModal();
   addProjectTaskView.hideModal();
+  editTaskView.hideModal();
 
   // Type
   const type = filterView.getCurFilter() >= 0 ? 'filter' : 'folder';
@@ -55,10 +58,8 @@ const controlFavourite = function (dataIndex) {
   // Check favourite boolean value
   const result =
     type === 'filter'
-      ? Object.values(model.state)[filterView.getCurFilter()][dataIndex]
-          .favourite
-      : model.state.folders[resultProjectsView.getCurProject()].tasks[dataIndex]
-          .favourite;
+      ? Object.values(model.state)[typeIndex][dataIndex].favourite
+      : model.state.folders[typeIndex].tasks[dataIndex].favourite;
 
   // Toggle favourite
   if (!result) model.addFavourite(dataIndex, type, typeIndex);
@@ -84,28 +85,31 @@ const controlFavourite = function (dataIndex) {
 const controlDelete = function (dataIndex) {
   addTaskView.hideModal();
   addProjectTaskView.hideModal();
+  editTaskView.hideModal();
 
-  model.deleteTask(dataIndex);
+  const type = filterView.getCurFilter() >= 0 ? 'filter' : 'folder';
+
+  const typeIndex =
+    type === 'filter'
+      ? filterView.getCurFilter()
+      : resultProjectsView.getCurProject();
+
+  model.deleteTask(dataIndex, type, typeIndex);
+
+  const dataSet =
+    type === 'filter'
+      ? Object.values(model.state)[typeIndex]
+      : model.state.folders[typeIndex].tasks;
+
   resultTasksView.clear();
-
-  // const folderIndex = resultProjectsView.getCurProject();
-
-  // const dataSet =
-  //   folderIndex >= 0
-  //     ? model.state.folders[folderIndex].tasks
-  //     : Object.values(model.state)[filterView.getCurFilter()];
-  const dataSet = Object.values(model.state)[filterView.getCurFilter()]; // FIXME
-
-  if (dataSet.length !== 0)
-    dataSet.forEach(data => resultTasksView.render(data));
+  if (dataSet.length > 0) dataSet.forEach(data => resultTasksView.render(data));
 };
 
 const controlEdit = function (dataIndex) {
   addProjectTaskView.hideModal();
-
   addTaskView.hideAddTaskView();
 
-  editTaskView.getForm(model.state.allTasks[dataIndex], dataIndex);
+  editTaskView.getForm(model.state.allTasks[dataIndex], dataIndex); // FIXME
 };
 
 const controlEditTask = function (newData, curDataIndex) {
@@ -118,7 +122,7 @@ const controlEditTask = function (newData, curDataIndex) {
   //     : Object.values(model.state)[filterView.getCurFilter()];
   const dataSet = Object.values(model.state)[filterView.getCurFilter()]; // FIXME
   resultTasksView.update(dataSet);
-  addTaskView.unHideAddTaskView();
+  addTaskView.unHideAddTaskView(); // FIXME
 };
 
 const controlAddProject = function (folder) {
@@ -134,14 +138,9 @@ const controlClickFolder = function (folderIndex) {
 
   const dataSet = model.state.folders[folderIndex].tasks;
   resultTasksView.clear();
-  if (dataSet.length !== 0)
-    dataSet.forEach(data => resultTasksView.render(data));
+  if (dataSet.length > 0) dataSet.forEach(data => resultTasksView.render(data));
   addTaskView.unHideAddTaskView();
   // TODO
-  // add data to folder tasks
-  // filter data
-  // store data in folder
-
   // delete folder
   // delete task in filter
   // re-render
@@ -169,5 +168,3 @@ const init = function () {
   filterView.getDefaultClick();
 };
 init();
-
-console.log(undefined === true);
