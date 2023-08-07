@@ -7,6 +7,7 @@ class FilterView extends View {
 
   getDefaultClick() {
     this._allNav[0].click();
+    console.log(this._filterNum);
   }
 
   addHandlerClick(handler) {

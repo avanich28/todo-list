@@ -3,6 +3,7 @@ import View from './View.js';
 class ResultProjectsView extends View {
   _parentElement = document.querySelector('.project-folder-lists');
   _projectNum;
+  _clickDelete = true; // Default
 
   addHandlerClickFolder(handler) {
     this._parentElement.addEventListener('click', e => {
@@ -13,6 +14,19 @@ class ResultProjectsView extends View {
       const folderIndex = +folder.dataset.folder;
       // For resultTasksView
       this._projectNum = folderIndex;
+      handler(folderIndex);
+    });
+  }
+
+  addHandlerDeleteFolder(handler) {
+    this._parentElement.addEventListener('click', e => {
+      const deleteMark = e.target.closest('.bi-x');
+      if (!deleteMark) return;
+
+      const folderIndex = +e.target.closest('.project-folder-btn').dataset
+        .folder;
+      this._clickDelete = true;
+      console.log(this._clickDelete);
       handler(folderIndex);
     });
   }
@@ -28,12 +42,24 @@ class ResultProjectsView extends View {
       </li>`;
   }
 
+  clear() {
+    this._parentElement.innerHTML = '';
+  }
+
   getCurProject() {
     return this._projectNum;
   }
 
   resetCurProject() {
     this._projectNum = undefined;
+  }
+
+  checkClickDelete() {
+    return this._clickDelete;
+  }
+
+  resetClickDelete() {
+    this._clickDelete = false;
   }
 }
 

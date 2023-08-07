@@ -9,7 +9,7 @@ import filterView from './views/filterView.js';
 import resultTasksView from './views/resultTasksView.js';
 import resultProjectsView from './views/resultProjectsView.js';
 
-const checkAndGetDataType = function () {
+const checkAndGetDataType = function (deleteFolder = false) {
   const type = filterView.getCurFilter() >= 0 ? 'filter' : 'folder';
 
   const typeIndex =
@@ -26,9 +26,10 @@ const checkAndGetDataType = function () {
 };
 
 const controlAddTaskView = function (data) {
+  const { type, typeIndex } = checkAndGetDataType();
+
   // Store Data
-  const folderIndex = resultProjectsView.getCurProject();
-  if (folderIndex >= 0) model.storeTask(data, folderIndex);
+  if (type === 'folder' && typeIndex >= 0) model.storeTask(data, typeIndex);
   else model.storeTask(data);
 
   // Render Data
@@ -50,7 +51,6 @@ const controlFilterView = function (dataTypeIndex) {
   // Render display
   if (dataSet.length !== 0)
     dataSet.forEach(data => resultTasksView.render(data));
-  console.log(filterView.getCurFilter());
 
   // Allow user to add list only 'all' filter
   if (dataTypeIndex === 0) addTaskView.unHideAddTaskView();
@@ -126,7 +126,8 @@ const controlClickFolder = function (folderIndex) {
   addProjectTaskView.hideModal();
   editTaskView.hideModal();
 
-  filterView.resetCurFilter();
+  if (!resultProjectsView.checkClickDelete()) filterView.resetCurFilter();
+  resultProjectsView.resetClickDelete();
 
   const dataSet = model.state.folders[folderIndex].tasks;
   resultTasksView.clear();
@@ -136,9 +137,18 @@ const controlClickFolder = function (folderIndex) {
 
 const controlDeleteFolder = function (folderIndex) {
   // TODO
-  // delete folder
-  // delete task in filter
-  // re-render
+  // Delete folder
+  model.deleteFolder(folderIndex);
+
+  // Re-render project folder
+  resultProjectsView.clear();
+  model.state.folders.forEach(folder => resultProjectsView.render(folder));
+
+  // Re-render task
+  const { type, dataSet } = checkAndGetDataType(true);
+  resultTasksView.clear();
+  if (type === 'folder') filterView.getDefaultClick();
+  else dataSet.forEach(data => resultTasksView.render(data));
 };
 
 const init = function () {
@@ -150,20 +160,18 @@ const init = function () {
   resultTasksView.addHandlerDelete(controlDelete);
   resultTasksView.addHandlerEdit(controlEdit);
   resultProjectsView.addHandlerClickFolder(controlClickFolder);
+  resultProjectsView.addHandlerDeleteFolder(controlDeleteFolder);
 
   // Hide form when click other places
   addTaskView.clickAddTaskBtn(
     addProjectTaskView.hideModal.bind(addProjectTaskView)
   );
   addProjectTaskView.clickAddProjectBtn(
-    addTaskView.hideModal.bind(addTaskView)
+    addTaskView.hideModal.bind(addTaskView),
+    editTaskView.hideModal.bind(editTaskView)
   );
-  // editTaskView.hideModal(); // FIXME
 
   // Default
   filterView.getDefaultClick();
 };
 init();
-
-const { type, typeIndex, dataSet } = checkAndGetDataType();
-console.log(type, typeIndex, dataSet);

@@ -27,10 +27,11 @@ class AddProjectTaskView extends TaskView {
     this._form.classList.add('hide');
   }
 
-  clickAddProjectBtn(func) {
+  clickAddProjectBtn(func, func2) {
     this._addProjectBtn.addEventListener('click', () => {
       this._toggleModal();
       func();
+      func2();
     });
   }
 

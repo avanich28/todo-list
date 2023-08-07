@@ -76,7 +76,7 @@ export const deleteTask = function (dataIndex, type, typeIndex) {
 };
 
 const resetCategories = function (data) {
-  findAndDeleteIndex(1, 3, data, true); // FIXME
+  findAndDeleteIndex(1, 3, data, true);
   filterCategories(data);
 };
 
@@ -92,4 +92,8 @@ export const storeFolder = function (folder) {
   state.folders.push(folder);
 };
 
-export const deleteFolder = function (folder) {};
+export const deleteFolder = function (folderIndex) {
+  const dataArr = state.folders[folderIndex].tasks;
+  state.folders.splice(folderIndex, 1);
+  dataArr.forEach(data => findAndDeleteIndex(0, 4, data));
+};

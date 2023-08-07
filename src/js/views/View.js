@@ -51,7 +51,7 @@ export default class View {
   }
 
   activeNav(el) {
-    // Latest update
+    // Get latest update
     const allNav = document.querySelectorAll(
       '.filter-btn, .project-folder-btn'
     );
