@@ -40,22 +40,22 @@ const findData = function (dataIndex, type, typeIndex) {
   return data;
 };
 
-// Delete in each filter and folder
-const findAndDeleteIndex = function (start, end, data) {
+// Delete data in each filter and folder
+const findAndDeleteIndex = function (start, end, data, edit = false) {
   for (let i = start; i < end; i++) {
     const index = Object.values(state)[i].findIndex(obj => obj === data);
     if (index === -1) continue;
     else Object.values(state)[i].splice(index, 1);
   }
 
-  for (let i = 0; i < state.folders.length; i++) {
-    const index = state.folders[i].tasks.findIndex(obj => obj === data);
-    if (index === -1) continue;
-    else state.folders[i].tasks.splice(index, 1);
+  if (!edit) {
+    for (let i = 0; i < state.folders.length; i++) {
+      const index = state.folders[i].tasks.findIndex(obj => obj === data);
+      if (index === -1) continue;
+      else state.folders[i].tasks.splice(index, 1);
+    }
   }
 };
-
-// Delete folder
 
 export const addFavourite = function (dataIndex, type, typeIndex) {
   const data = findData(dataIndex, type, typeIndex);
@@ -68,7 +68,6 @@ export const deleteFavourite = function (dataIndex, type, typeIndex) {
   const index = state.favouriteTasks.findIndex(obj => obj === data);
   data.favourite = false;
   state.favouriteTasks.splice(index, 1);
-  console.log(state.favouriteTasks);
 };
 
 export const deleteTask = function (dataIndex, type, typeIndex) {
@@ -76,22 +75,21 @@ export const deleteTask = function (dataIndex, type, typeIndex) {
   findAndDeleteIndex(0, 4, data);
 };
 
-const resetCategories = function (curDataIndex) {
-  const data = state.allTasks[curDataIndex];
-  findAndDeleteIndex(1, 3, data);
-  filterCategories(state.allTasks[curDataIndex]);
+const resetCategories = function (data) {
+  findAndDeleteIndex(1, 3, data, true); // FIXME
+  filterCategories(data);
 };
 
-export const editData = function (newData, curDataIndex) {
-  state.allTasks[curDataIndex].todo = newData.todo;
-  state.allTasks[curDataIndex].date = newData.date;
-  resetCategories(curDataIndex);
+export const editData = function (newData, curDataIndex, type, typeIndex) {
+  const data = findData(curDataIndex, type, typeIndex);
+  data.todo = newData.todo;
+  data.date = newData.date;
+  resetCategories(data);
 };
 
 export const storeFolder = function (folder) {
   folder.tasks = [];
   state.folders.push(folder);
-  console.log(state.folders);
 };
 
 export const deleteFolder = function (folder) {};

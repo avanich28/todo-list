@@ -9,6 +9,22 @@ import filterView from './views/filterView.js';
 import resultTasksView from './views/resultTasksView.js';
 import resultProjectsView from './views/resultProjectsView.js';
 
+const checkAndGetDataType = function () {
+  const type = filterView.getCurFilter() >= 0 ? 'filter' : 'folder';
+
+  const typeIndex =
+    type === 'filter'
+      ? filterView.getCurFilter()
+      : resultProjectsView.getCurProject();
+
+  const dataSet =
+    type === 'filter'
+      ? Object.values(model.state)[typeIndex]
+      : model.state.folders[typeIndex].tasks;
+
+  return { type, typeIndex, dataSet };
+};
+
 const controlAddTaskView = function (data) {
   // Store Data
   const folderIndex = resultProjectsView.getCurProject();
@@ -46,30 +62,17 @@ const controlFavourite = function (dataIndex) {
   addProjectTaskView.hideModal();
   editTaskView.hideModal();
 
-  // Type
-  const type = filterView.getCurFilter() >= 0 ? 'filter' : 'folder';
-
-  // Store Type Index
-  const typeIndex =
-    type === 'filter'
-      ? filterView.getCurFilter()
-      : resultProjectsView.getCurProject();
+  const { type, typeIndex, dataSet } = checkAndGetDataType();
 
   // Check favourite boolean value
   const result =
     type === 'filter'
-      ? Object.values(model.state)[typeIndex][dataIndex].favourite
-      : model.state.folders[typeIndex].tasks[dataIndex].favourite;
+      ? dataSet[dataIndex].favourite
+      : dataSet[dataIndex].favourite;
 
   // Toggle favourite
   if (!result) model.addFavourite(dataIndex, type, typeIndex);
   else model.deleteFavourite(dataIndex, type, typeIndex);
-
-  // Get data array
-  const dataSet =
-    type === 'filter'
-      ? Object.values(model.state)[typeIndex]
-      : model.state.folders[typeIndex].tasks;
 
   // Render
   if (type === 'filter' && typeIndex === 3) {
@@ -87,19 +90,9 @@ const controlDelete = function (dataIndex) {
   addProjectTaskView.hideModal();
   editTaskView.hideModal();
 
-  const type = filterView.getCurFilter() >= 0 ? 'filter' : 'folder';
-
-  const typeIndex =
-    type === 'filter'
-      ? filterView.getCurFilter()
-      : resultProjectsView.getCurProject();
+  const { type, typeIndex, dataSet } = checkAndGetDataType();
 
   model.deleteTask(dataIndex, type, typeIndex);
-
-  const dataSet =
-    type === 'filter'
-      ? Object.values(model.state)[typeIndex]
-      : model.state.folders[typeIndex].tasks;
 
   resultTasksView.clear();
   if (dataSet.length > 0) dataSet.forEach(data => resultTasksView.render(data));
@@ -109,18 +102,16 @@ const controlEdit = function (dataIndex) {
   addProjectTaskView.hideModal();
   addTaskView.hideAddTaskView();
 
-  editTaskView.getForm(model.state.allTasks[dataIndex], dataIndex); // FIXME
+  const dataType = checkAndGetDataType();
+
+  editTaskView.getForm(dataType.dataSet[dataIndex], dataIndex);
 };
 
 const controlEditTask = function (newData, curDataIndex) {
-  model.editData(newData, curDataIndex);
-  // const folderIndex = resultProjectsView.getCurProject();
+  const { type, typeIndex, dataSet } = checkAndGetDataType();
 
-  // const dataSet =
-  //   folderIndex >= 0
-  //     ? model.state.folders[folderIndex].tasks
-  //     : Object.values(model.state)[filterView.getCurFilter()];
-  const dataSet = Object.values(model.state)[filterView.getCurFilter()]; // FIXME
+  model.editData(newData, curDataIndex, type, typeIndex);
+
   resultTasksView.update(dataSet);
   addTaskView.unHideAddTaskView(); // FIXME
 };
@@ -133,6 +124,7 @@ const controlAddProject = function (folder) {
 const controlClickFolder = function (folderIndex) {
   addTaskView.hideModal();
   addProjectTaskView.hideModal();
+  editTaskView.hideModal();
 
   filterView.resetCurFilter();
 
@@ -140,6 +132,9 @@ const controlClickFolder = function (folderIndex) {
   resultTasksView.clear();
   if (dataSet.length > 0) dataSet.forEach(data => resultTasksView.render(data));
   addTaskView.unHideAddTaskView();
+};
+
+const controlDeleteFolder = function (folderIndex) {
   // TODO
   // delete folder
   // delete task in filter
@@ -163,8 +158,12 @@ const init = function () {
   addProjectTaskView.clickAddProjectBtn(
     addTaskView.hideModal.bind(addTaskView)
   );
+  // editTaskView.hideModal(); // FIXME
 
   // Default
   filterView.getDefaultClick();
 };
 init();
+
+const { type, typeIndex, dataSet } = checkAndGetDataType();
+console.log(type, typeIndex, dataSet);
