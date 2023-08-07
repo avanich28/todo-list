@@ -87,6 +87,10 @@ export const editData = function (newData, curDataIndex, type, typeIndex) {
   resetCategories(data);
 };
 
+export const checkFolderName = function (folder) {
+  return state.folders.map(obj => obj.name).includes(folder.name);
+};
+
 export const storeFolder = function (folder) {
   folder.tasks = [];
   state.folders.push(folder);

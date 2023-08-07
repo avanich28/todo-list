@@ -8,6 +8,7 @@ import addProjectTaskView from './views/addProjectTaskView.js';
 import filterView from './views/filterView.js';
 import resultTasksView from './views/resultTasksView.js';
 import resultProjectsView from './views/resultProjectsView.js';
+import paginationView from './views/paginationView.js';
 
 const checkAndGetDataType = function (deleteFolder = false) {
   const type = filterView.getCurFilter() >= 0 ? 'filter' : 'folder';
@@ -117,8 +118,12 @@ const controlEditTask = function (newData, curDataIndex) {
 };
 
 const controlAddProject = function (folder) {
-  model.storeFolder(folder);
-  resultProjectsView.render(model.state.folders.at(-1));
+  if (model.checkFolderName(folder)) {
+    alert('This name is already used. Please fill again : D');
+  } else {
+    model.storeFolder(folder);
+    resultProjectsView.render(model.state.folders.at(-1));
+  }
 };
 
 const controlClickFolder = function (folderIndex) {
@@ -126,6 +131,7 @@ const controlClickFolder = function (folderIndex) {
   addProjectTaskView.hideModal();
   editTaskView.hideModal();
 
+  // Prevent to reset curFilter when click delete mark
   if (!resultProjectsView.checkClickDelete()) filterView.resetCurFilter();
   resultProjectsView.resetClickDelete();
 
@@ -136,7 +142,6 @@ const controlClickFolder = function (folderIndex) {
 };
 
 const controlDeleteFolder = function (folderIndex) {
-  // TODO
   // Delete folder
   model.deleteFolder(folderIndex);
 
@@ -151,6 +156,8 @@ const controlDeleteFolder = function (folderIndex) {
   else dataSet.forEach(data => resultTasksView.render(data));
 };
 
+const controlPagination = function () {};
+
 const init = function () {
   addTaskView.addHandlerUpload(controlAddTaskView);
   filterView.addHandlerClick(controlFilterView);
@@ -161,6 +168,7 @@ const init = function () {
   resultTasksView.addHandlerEdit(controlEdit);
   resultProjectsView.addHandlerClickFolder(controlClickFolder);
   resultProjectsView.addHandlerDeleteFolder(controlDeleteFolder);
+  paginationView.addHandlerClick(controlPagination);
 
   // Hide form when click other places
   addTaskView.clickAddTaskBtn(
