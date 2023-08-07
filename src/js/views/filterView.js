@@ -7,7 +7,6 @@ class FilterView extends View {
 
   getDefaultClick() {
     this._allNav[0].click();
-    console.log(this._filterNum);
   }
 
   addHandlerClick(handler) {
@@ -19,7 +18,7 @@ class FilterView extends View {
 
       const dataTypeIndex = +btn.dataset.filter;
       // For adding favourite
-      self._filterNum = dataTypeIndex; // FIXME
+      self._filterNum = dataTypeIndex;
 
       handler(dataTypeIndex);
     });

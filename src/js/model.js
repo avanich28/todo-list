@@ -7,7 +7,6 @@ export const state = {
   weekTasks: [],
   favouriteTasks: [],
   folders: [],
-  search: {},
 };
 
 const getWeekDate = function () {
@@ -32,7 +31,6 @@ export const storeTask = function (data, folderIndex = false) {
 };
 
 const findData = function (dataIndex, type, typeIndex) {
-  console.log(state.folders, typeIndex, type);
   const data =
     type === 'filter'
       ? Object.values(state)[typeIndex][dataIndex]
@@ -76,7 +74,7 @@ export const deleteTask = function (dataIndex, type, typeIndex) {
 };
 
 const resetCategories = function (data) {
-  findAndDeleteIndex(1, 3, data, true);
+  findAndDeleteIndex(1, 3, data, true); // true = Don't want to remove tasks in the folder
   filterCategories(data);
 };
 

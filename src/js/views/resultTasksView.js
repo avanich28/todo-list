@@ -28,16 +28,14 @@ class ResultTasksView extends View {
       if (!pencil) return;
 
       handler(this._getItemIndex(e.target));
+      document
+        .querySelector('.edit-lists')
+        .scrollIntoView({ behavior: 'smooth' });
     });
-  }
-
-  clear() {
-    this._parentElement.innerHTML = '';
   }
 
   _getItemIndex(target) {
     const data = target.closest('.task__item');
-    console.log(data);
     const dataIndex = +data.dataset.index;
     return dataIndex;
   }

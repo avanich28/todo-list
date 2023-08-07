@@ -8,9 +8,8 @@ import addProjectTaskView from './views/addProjectTaskView.js';
 import filterView from './views/filterView.js';
 import resultTasksView from './views/resultTasksView.js';
 import resultProjectsView from './views/resultProjectsView.js';
-import paginationView from './views/paginationView.js';
 
-const checkAndGetDataType = function (deleteFolder = false) {
+const checkAndGetDataType = function () {
   const type = filterView.getCurFilter() >= 0 ? 'filter' : 'folder';
 
   const typeIndex =
@@ -21,7 +20,7 @@ const checkAndGetDataType = function (deleteFolder = false) {
   const dataSet =
     type === 'filter'
       ? Object.values(model.state)[typeIndex]
-      : model.state.folders[typeIndex].tasks;
+      : model.state.folders[typeIndex]?.tasks;
 
   return { type, typeIndex, dataSet };
 };
@@ -102,6 +101,7 @@ const controlDelete = function (dataIndex) {
 const controlEdit = function (dataIndex) {
   addProjectTaskView.hideModal();
   addTaskView.hideAddTaskView();
+  editTaskView.hideModal();
 
   const dataType = checkAndGetDataType();
 
@@ -114,7 +114,7 @@ const controlEditTask = function (newData, curDataIndex) {
   model.editData(newData, curDataIndex, type, typeIndex);
 
   resultTasksView.update(dataSet);
-  addTaskView.unHideAddTaskView(); // FIXME
+  addTaskView.unHideAddTaskView();
 };
 
 const controlAddProject = function (folder) {
@@ -131,9 +131,7 @@ const controlClickFolder = function (folderIndex) {
   addProjectTaskView.hideModal();
   editTaskView.hideModal();
 
-  // Prevent to reset curFilter when click delete mark
-  if (!resultProjectsView.checkClickDelete()) filterView.resetCurFilter();
-  resultProjectsView.resetClickDelete();
+  filterView.resetCurFilter();
 
   const dataSet = model.state.folders[folderIndex].tasks;
   resultTasksView.clear();
@@ -150,13 +148,11 @@ const controlDeleteFolder = function (folderIndex) {
   model.state.folders.forEach(folder => resultProjectsView.render(folder));
 
   // Re-render task
-  const { type, dataSet } = checkAndGetDataType(true);
+  const { type, dataSet } = checkAndGetDataType();
   resultTasksView.clear();
   if (type === 'folder') filterView.getDefaultClick();
   else dataSet.forEach(data => resultTasksView.render(data));
 };
-
-const controlPagination = function () {};
 
 const init = function () {
   addTaskView.addHandlerUpload(controlAddTaskView);
@@ -168,7 +164,6 @@ const init = function () {
   resultTasksView.addHandlerEdit(controlEdit);
   resultProjectsView.addHandlerClickFolder(controlClickFolder);
   resultProjectsView.addHandlerDeleteFolder(controlDeleteFolder);
-  paginationView.addHandlerClick(controlPagination);
 
   // Hide form when click other places
   addTaskView.clickAddTaskBtn(

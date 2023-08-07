@@ -142,11 +142,6 @@ table {
   --margin-bottom-head: 20px;
   --padding-button: 10px 0 10px 13px;
   --border-radius-button: 8px;
-  --background-color-button: linear-gradient(
-    to right,
-    #02bc7d,
-    rgb(51, 139, 147)
-  );
   --padding-button-page: 7px 10px;
   --padding-task-item: 10px 20px;
   --margin-bottom-task-item: 10px;
@@ -551,25 +546,6 @@ input[type='date']:focus {
   transform: scale(1.05);
 }
 
-.pagination {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-}
-
-.page-btn {
-  border: none;
-  border-radius: var(--border-radius-button);
-  padding: var(--padding-button-page);
-  background: var(--background-color-button);
-  color: var(--font-color);
-  font-family: 'Comfortaa', cursive;
-}
-
-.page-btn:hover {
-  transform: scale(1.08);
-}
-
 h1,
 h2 {
   font-family: 'Comfortaa', cursive;
@@ -603,7 +579,6 @@ i {
 }
 
 .add-btn:active,
-.page-btn:active,
 .favourite-btn:active,
 .bin-btn:active,
 input[type='date']::-webkit-calendar-picker-indicator:active,

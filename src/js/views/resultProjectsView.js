@@ -3,12 +3,13 @@ import View from './View.js';
 class ResultProjectsView extends View {
   _parentElement = document.querySelector('.project-folder-lists');
   _projectNum;
-  _clickDelete = true; // Default
 
   addHandlerClickFolder(handler) {
     this._parentElement.addEventListener('click', e => {
       const folder = e.target.closest('.project-folder-btn');
+      const deleteMark = e.target.closest('.bi-x');
       if (!folder) return;
+      if (deleteMark) return; // 🔥 prevent double click
       this.activeNav(folder);
 
       const folderIndex = +folder.dataset.folder;
@@ -25,10 +26,16 @@ class ResultProjectsView extends View {
 
       const folderIndex = +e.target.closest('.project-folder-btn').dataset
         .folder;
-      this._clickDelete = true;
-      console.log(this._clickDelete);
       handler(folderIndex);
     });
+  }
+
+  getCurProject() {
+    return this._projectNum;
+  }
+
+  resetCurProject() {
+    this._projectNum = undefined;
   }
 
   _generateMarkup() {
@@ -40,26 +47,6 @@ class ResultProjectsView extends View {
           <i class="bi bi-x"></i>
         </button>
       </li>`;
-  }
-
-  clear() {
-    this._parentElement.innerHTML = '';
-  }
-
-  getCurProject() {
-    return this._projectNum;
-  }
-
-  resetCurProject() {
-    this._projectNum = undefined;
-  }
-
-  checkClickDelete() {
-    return this._clickDelete;
-  }
-
-  resetClickDelete() {
-    this._clickDelete = false;
   }
 }
 

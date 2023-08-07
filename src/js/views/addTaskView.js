@@ -2,12 +2,11 @@ import TaskView from './taskView.js';
 
 class AddTaskView extends TaskView {
   _parentEl = document.querySelector('.add-lists');
-  _addTaskBtn = document.querySelector('.add-btn--task');
+  _addBtn = document.querySelector('.add-btn--task');
   _form = document.querySelector('.form-task');
 
   constructor() {
     super();
-    // this._clickAddTaskBtn();
     this.clickCancelBtn();
   }
 
@@ -17,14 +16,9 @@ class AddTaskView extends TaskView {
       const dataArr = [...new FormData(this._form)];
       const data = Object.fromEntries(dataArr);
       handler(data);
-      this._toggleModal();
+      this.toggleModal();
       this.clearInput();
     });
-  }
-
-  hideModal() {
-    this._addTaskBtn.classList.remove('hide');
-    this._form.classList.add('hide');
   }
 
   hideAddTaskView() {
@@ -36,15 +30,10 @@ class AddTaskView extends TaskView {
   }
 
   clickAddTaskBtn(func) {
-    this._addTaskBtn.addEventListener('click', () => {
-      this._toggleModal();
+    this._addBtn.addEventListener('click', () => {
+      this.toggleModal();
       func();
     });
-  }
-
-  _toggleModal() {
-    this._addTaskBtn.classList.toggle('hide');
-    this._form.classList.toggle('hide');
   }
 }
 

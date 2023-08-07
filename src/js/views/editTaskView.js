@@ -7,7 +7,7 @@ class EditTaskView extends TaskView {
 
   constructor() {
     super();
-    this.clickCancelBtn();
+    this.clickCancelBtn(true);
   }
 
   addHandlerUploadEdit(handler) {
@@ -15,9 +15,8 @@ class EditTaskView extends TaskView {
       e.preventDefault();
       const dataArr = [...new FormData(this._form)];
       const newData = Object.fromEntries(dataArr);
-
       handler(newData, this.curDataIndex);
-      this._toggleModal();
+      this.toggleModal(true);
       this.clearInput();
     });
   }
@@ -26,18 +25,14 @@ class EditTaskView extends TaskView {
     this.curDataIndex = dataIndex;
     const inputs = Object.values(data);
     this._form
-      .querySelectorAll('.edit-textarea, #date')
+      .querySelectorAll('textarea, input')
       .forEach((el, i) => (el.value = inputs[i]));
-    this._toggleModal();
+    this.toggleModal(true);
   }
 
   hideModal() {
     this.clearInput();
     this._parentEl.classList.add('hide');
-  }
-
-  _toggleModal() {
-    this._parentEl.classList.toggle('hide');
   }
 }
 
