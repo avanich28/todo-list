@@ -208,6 +208,7 @@ body {
   gap: 30px;
 }
 
+input,
 input[type='checkbox']#check-task,
 input[type='text']#project-name,
 input[type='date'],
@@ -356,13 +357,13 @@ h2 {
 }
 
 .form-project {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, auto);
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  grid-template-rows: repeat(2, auto) !important;
   grid-template-areas:
     'project project'
-    'submit cancel';
-  gap: 5px;
+    'submit cancel' !important;
+  gap: 5px !important;
 }
 
 input[type='text']#project-name {
