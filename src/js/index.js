@@ -1,5 +1,5 @@
-import '../style.css';
 import checkMark from '../img/checkmark.png';
+import '../styles.css';
 import * as model from './model.js';
 import mode from './views/modeView.js';
 import addTaskView from './views/addTaskView.js';
