@@ -154,7 +154,15 @@ const controlDeleteFolder = function (folderIndex) {
   else dataSet.forEach(data => resultTasksView.render(data));
 };
 
+const controlLocalStorage = function () {
+  // Filter allTasks
+
+  // Render Projects
+  model.state.folders.forEach(folder => resultProjectsView.render(folder));
+};
+
 const init = function () {
+  controlLocalStorage();
   addTaskView.addHandlerUpload(controlAddTaskView);
   filterView.addHandlerClick(controlFilterView);
   editTaskView.addHandlerUploadEdit(controlEditTask);
@@ -176,5 +184,6 @@ const init = function () {
 
   // Default
   filterView.getDefaultClick();
+  // FIXME local storage projects folder
 };
 init();
