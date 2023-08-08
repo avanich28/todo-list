@@ -366,13 +366,13 @@ h2 {
 }
 
 input[type='text']#project-name {
-  grid-area: project;
-  border-radius: var(--border-radius-button);
-  padding: 5px;
-  background-color: transparent;
-  border: 1px solid grey;
-  font-family: inherit;
-  color: inherit;
+  grid-area: project !important;
+  border-radius: var(--border-radius-button) !important;
+  padding: 5px !important;
+  background-color: transparent !important;
+  border: 1px solid grey !important;
+  font-family: inherit !important;
+  color: inherit !important;
 }
 
 .footer-1 {
