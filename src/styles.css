@@ -208,9 +208,8 @@ body {
   gap: 30px;
 }
 
-input,
 input[type='checkbox']#check-task,
-input[type='text']#project-name,
+.form-project > input[type='text'],
 input[type='date'],
 textarea {
   -webkit-appearance: none !important;
@@ -367,12 +366,12 @@ h2 {
 }
 
 input[type='text'] {
-  grid-area: project;
+  grid-area: project !important;
   border-radius: var(--border-radius-button);
   padding: 5px;
   background-color: transparent;
   border: 1px solid grey;
-  font-family: inherit;
+  font-family: system-ui;
   color: var(--font-color);
 }
 
