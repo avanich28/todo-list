@@ -3,7 +3,7 @@ import View from './View.js';
 class FilterView extends View {
   _parentEl = document.querySelector('.filter-lists');
   _allNav = document.querySelectorAll('.filter-btn');
-  _filterNum = 0; // Default
+  _navNum = 0; // Default
 
   getDefaultClick() {
     this._allNav[0].click();
@@ -18,18 +18,10 @@ class FilterView extends View {
 
       const dataTypeIndex = +btn.dataset.filter;
       // For adding favourite
-      self._filterNum = dataTypeIndex;
+      self._navNum = dataTypeIndex;
 
       handler(dataTypeIndex);
     });
-  }
-
-  getCurFilter() {
-    return this._filterNum;
-  }
-
-  resetCurFilter() {
-    this._filterNum = undefined;
   }
 }
 

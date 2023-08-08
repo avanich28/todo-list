@@ -2,7 +2,7 @@ import View from './View.js';
 
 class ResultProjectsView extends View {
   _parentElement = document.querySelector('.project-folder-lists');
-  _projectNum;
+  _navNum;
 
   addHandlerClickFolder(handler) {
     this._parentElement.addEventListener('click', e => {
@@ -14,7 +14,7 @@ class ResultProjectsView extends View {
 
       const folderIndex = +folder.dataset.folder;
       // For resultTasksView
-      this._projectNum = folderIndex;
+      this._navNum = folderIndex;
       handler(folderIndex);
     });
   }
@@ -28,14 +28,6 @@ class ResultProjectsView extends View {
         .folder;
       handler(folderIndex);
     });
-  }
-
-  getCurProject() {
-    return this._projectNum;
-  }
-
-  resetCurProject() {
-    this._projectNum = undefined;
   }
 
   _generateMarkup() {

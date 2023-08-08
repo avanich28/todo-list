@@ -10,12 +10,10 @@ import resultTasksView from './views/resultTasksView.js';
 import resultProjectsView from './views/resultProjectsView.js';
 
 const checkAndGetDataType = function () {
-  const type = filterView.getCurFilter() >= 0 ? 'filter' : 'folder';
+  const type = filterView.getCurNav() >= 0 ? 'filter' : 'folder';
 
   const typeIndex =
-    type === 'filter'
-      ? filterView.getCurFilter()
-      : resultProjectsView.getCurProject();
+    type === 'filter' ? filterView.getCurNav() : resultProjectsView.getCurNav();
 
   const dataSet =
     type === 'filter'
@@ -26,14 +24,17 @@ const checkAndGetDataType = function () {
 };
 
 const controlAddTaskView = function (data) {
-  const { type, typeIndex } = checkAndGetDataType();
+  if (model.checkTaskDetail(data)) {
+    alert('This detail is already noted : )\nPlease fill again');
+  } else {
+    const { type, typeIndex } = checkAndGetDataType();
+    // Store Data
+    if (type === 'folder' && typeIndex >= 0) model.storeTask(data, typeIndex);
+    else model.storeTask(data);
 
-  // Store Data
-  if (type === 'folder' && typeIndex >= 0) model.storeTask(data, typeIndex);
-  else model.storeTask(data);
-
-  // Render Data
-  resultTasksView.render(model.state.allTasks.at(-1));
+    // Render Data
+    resultTasksView.render(model.state.allTasks.at(-1));
+  }
 };
 
 const controlFilterView = function (dataTypeIndex) {
@@ -41,7 +42,7 @@ const controlFilterView = function (dataTypeIndex) {
   addProjectTaskView.hideModal();
   editTaskView.hideModal();
 
-  resultProjectsView.resetCurProject();
+  resultProjectsView.resetNav();
 
   const dataSet = Object.values(model.state)[dataTypeIndex];
 
@@ -131,7 +132,7 @@ const controlClickFolder = function (folderIndex) {
   addProjectTaskView.hideModal();
   editTaskView.hideModal();
 
-  filterView.resetCurFilter();
+  filterView.resetNav();
 
   const dataSet = model.state.folders[folderIndex].tasks;
   resultTasksView.clear();
@@ -155,8 +156,6 @@ const controlDeleteFolder = function (folderIndex) {
 };
 
 const controlLocalStorage = function () {
-  // Filter allTasks
-
   // Render Projects
   model.state.folders.forEach(folder => resultProjectsView.render(folder));
 };
@@ -182,8 +181,7 @@ const init = function () {
     editTaskView.hideModal.bind(editTaskView)
   );
 
-  // Default
+  // Default click
   filterView.getDefaultClick();
-  // FIXME local storage projects folder
 };
 init();

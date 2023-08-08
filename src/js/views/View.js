@@ -62,4 +62,12 @@ export default class View {
   clear() {
     this._parentElement.innerHTML = '';
   }
+
+  getCurNav() {
+    return this._navNum;
+  }
+
+  resetNav() {
+    this._navNum = undefined;
+  }
 }

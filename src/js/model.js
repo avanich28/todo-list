@@ -33,6 +33,13 @@ export const storeTask = function (data, folderIndex = false) {
   persistTasksAndFolders();
 };
 
+export const checkTaskDetail = function (data) {
+  const allTodo = state.allTasks.map(obj => obj.todo);
+  const allDate = state.allTasks.map(obj => obj.date);
+  if (allTodo.includes(data.todo) && allDate.includes(data.date)) return true;
+  else false;
+};
+
 const findData = function (dataIndex, type, typeIndex) {
   const data =
     type === 'filter'
