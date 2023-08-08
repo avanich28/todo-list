@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo List</title>
-    <link rel="stylesheet" src="style.css" />
-  <script defer src="bundle625417890a5205000c3c.js"></script></head>
+    <link rel="stylesheet" href="style.css" />
+  <script defer src="bundlecc37b9878cae6387202e.js"></script></head>
   <body>
     <header class="header-container">
       <div class="logo-container">
@@ -31,7 +31,7 @@
         <h2>Filters</h2>
         <nav class="navs">
           <ul class="filter-lists">
-            <li class="filter__item">
+            <li class="filter__item all">
               <button class="filter-btn" data-filter="0">
                 <i class="bi bi-inbox-fill"></i>
                 <span>All</span>
@@ -60,32 +60,36 @@
       </div>
       <div class="project-sub-container">
         <h2>Projects</h2>
-        <nav>
+        <nav class="project-folders">
           <ul class="project-folder-lists">
-            <li class="folder__item">
-              <button class="project-folder-btn" data-file="0">
+            <!-- <li class="folder__item">
+              <button class="project-folder-btn active" data-folder="0">
                 <i class="bi bi-folder"></i>
                 <span>Default</span>
+                <i class="bi bi-x"></i>
               </button>
-            </li>
+            </li> -->
           </ul>
         </nav>
-        <button class="add-btn add-btn--project">+ Add a Project</button>
-        <form action="#" class="form-project hide">
-          <label for="project-name"></label>
-          <input
-            type="text"
-            name="project-name"
-            id="project-name"
-            placeholder="Enter file name..."
-            maxlength="23"
-          />
-          <button class="submit-btn">Submit</button>
-          <button class="cancel-btn">Cancel</button>
-        </form>
+        <div class="add-projects">
+          <button class="add-btn add-btn--project">+ Add a Project</button>
+          <form action="#" class="form-project hide">
+            <label for="project-name"></label>
+            <input
+              type="text"
+              name="name"
+              id="project-name"
+              placeholder="Enter file name..."
+              maxlength="23"
+              required
+            />
+            <button class="submit-btn">Submit</button>
+            <button class="cancel-btn">Cancel</button>
+          </form>
+        </div>
       </div>
 
-      <footer>
+      <footer class="footer-1">
         <a href="https://github.com/avanich28"><i class="bi bi-github"></i></a>
         <p>&copy; Copyright by avanich28</p>
       </footer>
@@ -96,7 +100,7 @@
 
       <div class="tasks">
         <ul class="task-lists">
-          <li class="task__item">
+          <!-- <li class="task__item" data-index="0">
             <div class="task-box-1">
               <label for="check-task" class="check-task-label"
                 ><input type="checkbox" name="task" id="check-task"
@@ -113,34 +117,55 @@
               </button>
               <button class="bin-btn"><i class="bi bi-trash3-fill"></i></button>
             </div>
-          </li>
+          </li> -->
         </ul>
-        <button class="add-btn add-btn--task">+ Add a Task</button>
-        <form action="#" class="form-task hide">
-          <label for="todo" class="form-textarea"></label>
-          <textarea
-            name="todo"
-            id="todo"
-            cols="30"
-            rows="10"
-            placeholder="Please enter todo list here..."
-          ></textarea>
-          <label for="date" class="form-date"
-            ><input type="date" name="date" id="date" required
-          /></label>
-          <button class="submit-btn">Submit</button>
-          <button class="cancel-btn">Cancel</button>
-        </form>
-      </div>
-
-      <div class="pagination">
-        <button class="page-btn page-btn--left">
-          <i class="bi bi-arrow-left-short"></i><span>Page 1</span>
-        </button>
-        <button class="page-btn page-btn--right">
-          <span>Page 2</span><i class="bi bi-arrow-right-short"></i>
-        </button>
+        <div class="add-lists">
+          <button class="add-btn add-btn--task">+ Add a Task</button>
+          <form action="#" class="form-task hide">
+            <label for="todo" class="form-textarea"></label>
+            <textarea
+              class="form-textarea"
+              name="todo"
+              id="todo"
+              cols="30"
+              rows="10"
+              maxlength="40"
+              placeholder="Please fill between 1 and 40 characters"
+              required
+            ></textarea>
+            <label for="date" class="form-date"
+              ><input type="date" name="date" id="date" required
+            /></label>
+            <button class="submit-btn">Submit</button>
+            <button class="cancel-btn">Cancel</button>
+          </form>
+        </div>
+        <div class="edit-lists hide">
+          <form action="#" class="form-edit-task">
+            <label for="todo" class="form-textarea"></label>
+            <textarea
+              class="form-textarea edit-textarea"
+              name="todo"
+              id="todo"
+              cols="30"
+              rows="10"
+              maxlength="40"
+              placeholder="Please edit todo list here..."
+              required
+            ></textarea>
+            <label for="date" class="form-date"
+              ><input type="date" name="date" id="date" required
+            /></label>
+            <button class="submit-btn">Submit</button>
+            <button class="cancel-btn">Cancel</button>
+          </form>
+        </div>
       </div>
     </main>
+
+    <footer class="footer-2">
+      <a href="https://github.com/avanich28"><i class="bi bi-github"></i></a>
+      <p>&copy; Copyright by avanich28</p>
+    </footer>
   </body>
 </html>
