@@ -213,9 +213,9 @@ input[type='checkbox']#check-task,
 input[type='text']#project-name,
 input[type='date'],
 textarea {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
 }
 
 .header-container {
