@@ -215,7 +215,7 @@ body {
 }
 
 input[type='checkbox']#check-task,
-input[type='text'],
+input[type='text']#project-name,
 input[type='date'],
 textarea {
   -webkit-appearance: none;
