@@ -1,5 +1,5 @@
+import '../style.css';
 import checkMark from '../img/checkmark.png';
-import '../styles.css';
 import * as model from './model.js';
 import mode from './views/modeView.js';
 import addTaskView from './views/addTaskView.js';
@@ -115,6 +115,7 @@ const controlEditTask = function (newData, curDataIndex) {
   model.editData(newData, curDataIndex, type, typeIndex);
 
   resultTasksView.update(dataSet);
+
   addTaskView.unHideAddTaskView();
 };
 
@@ -141,6 +142,7 @@ const controlClickFolder = function (folderIndex) {
 };
 
 const controlDeleteFolder = function (folderIndex) {
+  const { type, typeIndex, dataSet } = checkAndGetDataType();
   // Delete folder
   model.deleteFolder(folderIndex);
 
@@ -149,10 +151,19 @@ const controlDeleteFolder = function (folderIndex) {
   model.state.folders.forEach(folder => resultProjectsView.render(folder));
 
   // Re-render task
-  const { type, dataSet } = checkAndGetDataType();
   resultTasksView.clear();
-  if (type === 'folder') filterView.getDefaultClick();
-  else dataSet.forEach(data => resultTasksView.render(data));
+  if (type === 'folder' && typeIndex === folderIndex) {
+    filterView.getDefaultClick();
+  } else if (type === 'folder') {
+    // Active previous folder nav
+    const folderName = resultProjectsView.getPreFolderNav();
+    const folderIndex = model.getFolderIndex(folderName);
+    resultProjectsView.activePreFolderNav(folderIndex);
+
+    dataSet.forEach(data => resultTasksView.render(data));
+  } else {
+    dataSet.forEach(data => resultTasksView.render(data));
+  }
 };
 
 const controlLocalStorage = function () {

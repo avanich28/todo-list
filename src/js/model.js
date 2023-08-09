@@ -17,10 +17,10 @@ const getWeekDate = function () {
   return dateArr;
 };
 
-const filterCategories = function (data) {
+const filterCategories = function (data, edit = false) {
   if (data.date === filterDate(new Date())) state.todayTasks.push(data);
   if (getWeekDate().includes(data.date)) state.weekTasks.push(data);
-  if (data.favourite) state.favouriteTasks.push(data);
+  if (data.favourite && !edit) state.favouriteTasks.push(data);
 };
 
 export const storeTask = function (data, folderIndex = false) {
@@ -91,7 +91,7 @@ export const deleteTask = function (dataIndex, type, typeIndex) {
 
 const resetCategories = function (data) {
   findAndDeleteIndex(1, 3, data, true); // true = Don't want to remove tasks in the folder
-  filterCategories(data);
+  filterCategories(data, true); // true = Don't want to push in favourite
 };
 
 export const editData = function (newData, curDataIndex, type, typeIndex) {
@@ -120,6 +120,10 @@ export const deleteFolder = function (folderIndex) {
   dataArr.forEach(data => findAndDeleteIndex(0, 4, data));
 
   persistTasksAndFolders();
+};
+
+export const getFolderIndex = function (folderName) {
+  return state.folders.findIndex(folder => folder.name === folderName);
 };
 
 const persistTasksAndFolders = function () {

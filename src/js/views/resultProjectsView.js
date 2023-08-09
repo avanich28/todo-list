@@ -3,6 +3,7 @@ import View from './View.js';
 class ResultProjectsView extends View {
   _parentElement = document.querySelector('.project-folder-lists');
   _navNum;
+  _preFolderEl; // For delete folder
 
   addHandlerClickFolder(handler) {
     this._parentElement.addEventListener('click', e => {
@@ -11,6 +12,7 @@ class ResultProjectsView extends View {
       if (!folder) return;
       if (deleteMark) return; // 🔥 prevent double click
       this.activeNav(folder);
+      this._preFolderEl = folder;
 
       const folderIndex = +folder.dataset.folder;
       // For resultTasksView
@@ -28,6 +30,17 @@ class ResultProjectsView extends View {
         .folder;
       handler(folderIndex);
     });
+  }
+
+  getPreFolderNav() {
+    return this._preFolderEl.querySelector('span').textContent;
+  }
+
+  activePreFolderNav(folderIndex) {
+    const el = this._parentElement.querySelectorAll('.project-folder-btn')[
+      folderIndex
+    ];
+    return this.activeNav(el);
   }
 
   _generateMarkup() {
